@@ -1,0 +1,514 @@
+---
+title: "Deadwater Predator Assessment"
+author:
+  - name: Braden Lott
+    affiliation: Biomark, Inc.
+  - name: Kevin See
+    affiliation: Biomark, Inc.
+  - name: Mike Ackerman
+    affiliation: Biomark, Inc.
+  - name: Nick Porter
+    affiliation: Biomark, Inc.
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  bookdown::pdf_document2:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    includes:
+      in_header: templates/header_ABS.tex
+    toc: yes
+    pandoc_args:
+    - --lua-filter=templates/scholarly-metadata.lua
+    - --lua-filter=templates/author-info-blocks2.lua
+    - --lua-filter=templates/pagebreak.lua
+  html_document:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 6
+    theme: simplex
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+  word_document:  
+    fig_caption: yes
+    fig_width: 7
+    fig_height: 7
+    toc: yes
+  bookdown::html_document2:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 6
+    theme: simplex
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+institute:
+- biomark: Biomark, Inc.
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, fig.pos = 'ht')
+options(knitr.kable.NA = '-')
+
+library(FSA)
+library(tidyverse)
+library(lubridate)
+library(scales)
+library(janitor)
+
+# some options for table formating
+options(knitr.kable.NA = '-')
+# options(knitr.table.format = "pandoc")
+
+# set default theme for ggplot
+theme_set(theme_bw())
+
+# change working directory only for running chunks within the document (not knitting)
+# setwd("Analyses and report")
+```
+
+<!--
+Kevin - Have you ever run into the issue where italics syntax (*this should be italics*) does not render in your .html output? None of the scientific names in this doc are rendering as italics and my Google searches couldn't find a solution
+-->
+
+# Introduction
+
+The Deadwater Slough is an approximately 2 kilometer (km) section of the mainstem Salmon River about 5.8 kms downstream from North Fork, Idaho (Figure \@ref(fig:map)) and occurs above where Dump Creek enters the Salmon River. In about 1897, a small mining diversion reservoir failed in the Dump Creek drainage, causing heavy flow to wash through the canyon and depositing large amounts of sediment next to and in the Salmon River (Emerson 1973). The event created a large alluvial fan which backed up the Salmon River creating an unnaturally slow and deep section of the river resembling a small reservoir. The Deadwater Slough is now recognized as an important bird watching and nesting area due to the riparian and backwater habitats created by the feature [(Deadwater Slough - Audubon Important Bird Areas)](https://www.audubon.org/important-bird-areas/deadwater-slough#). Further, changes in this river section, namely slower water velocities, a deepening channel, and warmer water temperatures have created favorable conditions for piscivorous fish predators (e.g., northern pikeminnow *Ptychocheilus oregonensis*, smallmouth bass *Micropterus dolomieu*) in addition to avian predators. Recent studies have demonstrated decreased movement and survival of juvenile salmonids emigrating through the Deadwater Slough. Axel et al. (2015) demonstrated decreased rates of emigration and survival for sockeye salmon *Oncorhynchus nerka* from Redfish Lake emigrating during the spring and recent winter telemetry studies have indicated decreased transition probabilities (approximately 10% less than nearby reaches) of juvenile Chinook salmon *O. tschawytscha* through Deadwater Slough during fall and winter months (Ackerman et al. 2018; Porter et al. 2019).
+
+We hypothesize that decreases in observed movement and survival of juvenile sockeye and Chinook salmon are largely due to increased densities of both piscivorous bird and fish species in the Deadwater Slough area resulting from artificially created habitat after the Dump Creek alluvial fan was formed. Additionally, Deadwater Slough occurs in a reach of the Salmon River believed to be important for overwinter rearing of presmolts attempting to exhibit concealment behavior. Deadwater Slough further contains little to no hydrological or structure features allowing juvenile salmonids to be predated upon without being able to seek adequate refuge.
+
+```{r map, out.width = "800px", fig.align = "center", fig.cap = "Map of Deadwater Slough area." }
+knitr::include_graphics("images/deadwater_map.jpg")
+```
+
+## Objectives
+
+The goal of our study is to assess predation on Chinook salmon and steelhead *O. mykiss* presmolts in the Deadwater Slough area. Objectives include:
+
+1. Assess fish predator composition and abundance in the Deadwater Slough using angling, snorkeling, and/or electrofishing capture methods. We intend to estimate abundance of piscivorous fishes using a mark-recapture approach for any species where we can obtain sufficient recaptures. In addition, we hope to document presence/absence for other fish predators that may be too low in abundance for standard mark/recapture models.
+2. Assess fish predation on target (Chinook, steelhead) juveniles using gut content analysis of captured predators. Stomach contents will be taken and evaluated to determine the proportion of predators consuming target species and the proportion of stomach contents consisting of targets versus non-targets (e.g., other fish species, non-fish contents such as macroinvertebrates).
+3. Conduct an evaluation of avian predation. We intend to look for presence/absence of nesting areas and perched or roosting birds to determine fall presence and, through observation of PIT tags in nesting areas, identify avian predation on juvenile salmonids.
+4. Finally, we will conduct an analysis to determine the potential impact on adult returns to the Upper Salmon Basin if juvenile Chinook salmon predation in the Deadwater Slough were reduced.
+
+# Methods
+
+## Fish Predator Abundance and Size
+
+Sampling to capture fish predators consisted primarily of angling, and secondarily, electroshocking and snorkeling over a six day period. The mark event occurred for three days of week 1, and the recapture event occurred for three days in week 2. Angling occurred with upwards of 8-13 anglers at a time using all tactics for gear and tackle in an attempt to reduce bias from targeting a certain species or size class. We did, however, choose tack and gear that would target fish with a large enough size class that would consume target presmolts. All captured individuals were identified to species, measured to total length (TL; from tip of snout to the edge of the largest caudal lobe), and marked with a unique fish clip per each day. Unique clips by day were used in the case that we recaptured individuals in the first week but didn't get sufficient recaptures during the second week and would require a multi-mark/recapture using the Schnabel method rather then the preferred one-time Lincoln-Peterson estimate. Snorkeling did occur the night of day two. Two snorkelers, one positioned along each bank, swam the reach from top to bottom. All fish observed were roughly identified and counted by species and size class. Electrofishing occurred during day 3 of week 1. Two rafts outfitted with MLES infinity boxes shocked from the top of the reach downstream using socker setting of DC current, 180 volts, and 25% duty cycle. All individuals collected were identified to species, measured, and fin clipped. snorkelling and electrofishing captures were used to validate whether angling was representatively sampling species and size classes and were unbiased.
+
+## Stomach Content Analysis
+
+We collected stomach contents of most captured individuals using gastric lavage (Foster 1977) and examined contents for the presence or absence of target juvenile salmonids and the proportion of stomach contents containing targets versus non-targets (e.g., macroinvertebrates). Stomach contents were stored in whirl-paks and preserved with 99% Iso-propyl Alcohol and were analyzed two weeks later in a controlled environment. Each sample was uniquely identified to match up with the appropriate fish record, contents were identified down to its unique composition, total weight of all content was measured in grams, and total weight of fish content, if found, were measured in grams. On the recapture event, a sample of northern pikeminnow captured were euthanized so that stomach contents could be obtained directly from the gut via dissection and used to validate that the gastric lavage was successful at flushing all or most of its stomach contents. Samples collected via dissection were processed at the same time as all other samples collected from the lavage.
+
+## Avian Predation Assessment
+
+Our assessment of avian predation consisted of walking the entire reach and surrounding areas searching for perched birds or nesting areas. In those areas, a two-person crew equipped with a mobile PIT tag antenna, a GPS, and a tablet equipped with the QST_Datalogger software scanned areas to examine for PIT tags that would have dropped to the ground after the target juvenile salmonid was consumed. GPS location was recorded at any location a PIT tag or nest was found.
+
+## Potential Impacts to Adult Returns
+
+Finally, we wanted to estimate the number of adult Chinook salmon that might be expected to survive to adulthood and return back to the Upper Salmon River basin above Deadwater Slough if predation of juvenile Chinook were reduced by some large amount. Our approach was the following:
+
+1. Estimate the consumption (g/day) that an average sized northern pikeminnow might require, given typical September to November temperatures in Deadwater Slough, to maintain its body condition.
+2. Determine the time length of the window (days/season) we want to assume that northern pikeminnow might be feeding on Chinook presmolts in Deadwater Slough. The beginning of the time period could include when juvenile Chinook salmon premolts begin emigrating from the Lemhi River in the fall and the end of the time period could include when Chinook salmon are believed to begin exhibiting concealment behavior in the mainstem Salmon River.
+3. Multiply the results from #1 and #2 to estimate the total biomass consumed by a single pikeminnow during the "feeding window" (g/season).
+4. Multiply results from #3 by the estimate of total abundance of pikeminnow in Deadwater Slough to determine the total biomass consumed in Deadwater Slough during the "feeding window".
+5. We then need to make some assumption about the proportion of the northern pikeminnow diet that is composed of juvenile Chinook salmon during the "feeding window". In our case, we evaluated scenarios in which 20%, 50% or 80% of the diet was composed of Chinook presmolts. Based on those assumptions, translate the total biomass consumed by northern pikeminnow into an estimate of biomass of Chinook presmolts consumed.
+6. Translate the biomass of Chinook presmolts consumed into abundance of Chinook presmolts using available information on the average weight of Chinook presmolts.
+7. Finally, translate our estimate of the number Chinook presmolts consumed into an expected number of adult Chinook salmon returning to the Upper Salmon Basin using available information on smolt-to-adult return (SAR) rates. 
+
+<!-- We need to account for winter mortality for Deadwater to Lower Granite -->
+
+<!-- In this section, we propose to do the following: -->
+<!-- 1. estimate the consumption an average sized pikeminnow would need, given average Sept/Oct temperatures in Deadwater, to maintain it's condition. Result in g/day? -->
+<!-- 1. determine the length of the window we want to assume pikeminnow are feeding on Chinook. Maybe Sept 1 - Oct 31? That would be 61 days.  *it might be worth doing that time chunk and another for November 1 through March 31.* -->
+<!-- 1. Multiply the first two numbers together to get total biomass consumed by single pikeminnow during the "feeding window" of time. -->
+<!-- 1. Multiply that by the total abundance of pikeminnow in Deadwater. -->
+<!-- 1. Make some assumptions about how much of the pikeminnow diet is made of Chinook during that feeding window. Potentially run 20%, 50% and 70% scenarios. -->
+<!-- 1. Translate total biomass consumed by pikeminnow into biomass of Chinook smolts by using above percentage -->
+<!-- 1. Translate Chinook smolt biomass into abundance of Chinook smolts by using some average weight of Chinook smolts -->
+<!-- 1. Translate Chinook smolt abundance into Chinook adult abundance by using estimates of SAR, probably Granite-to-Granite, hopefully from the more recent time period.  -->
+<!-- Sound like a plan? *sounds awesome to me* -->
+
+To accomplish the above and estimate the impacts from northern pikeminnow on juvenile Chinook salmon outmigrants in Deadwater Slough, as well as to returning adults, we used an R-based application of "Fish Bioenergetics 4.0" developed by Deslauriers et al. (2017). We estimated a daily rate of consumption for an individual northern pikeminnow based on predator and prey energy densities, water temperatures, and predator weight over a 91-day period from September 1 through November 30. We chose this time period as the feeding window where Chinook salmon presmolts begin to enter the mainstem Salmon River from natal tributaries (e.g., Lemhi River) and begin to migrate downstream but when temperatures are still high enough that juveniles are not yet exhibiting concealment behavior or torpor.
+
+We ran the model across a couple of different scenarios, including:
+
+1. Temperature was constant and fixed at 4&deg;C (the temperature when juvenile Chinook salmon begin to exhibit concealment) and pikeminnow weight was set at constant (i.e., no growth),
+2. Temperature was based on empirical data from a HOBO TidbiT v2 Data Logger installed at a fixed-site telemetry receiver located just downstream of the Deadwater Slough. Here, we summarized data to daily averages for each individual day; again, pikeminnow weight was set at constant (i.e., no growth). Empirical temperatures ranged from 20&deg;C to 4&deg;C.
+
+The assumption of no growth for pikeminnow was made because we wanted to assume the population of pikeminnow was stable. If growth of the population is occurring, the pikeminnow population may have greater impacts than those we estimated here. The average length of northern pikeminnow captured at the Deadwater Slough during our study was 422mm which calculates to an average weight of 1255.2g using the FSA package (Ogle et al. 2019) in R which provides a weight-length formula for northern pikeminnow sourced from Parker et al. (1995). Predator energy density for northern pikeminnow was available in the Bioenergetics 4.0 application and was fixed at 6,703 Joules(J)/g. Prey energy densities was taken from Moss et al. (2016) where they estimated juvenile Chinook at about 21,500 J/g. Using these temperatures, weights, and energy inputs, we estimated a total consumption in grams for an indvidual northern pikeminnow within the Deadwater reach. 
+ 
+To estimate the number of possible Chinook salmon that could be consumed, we assumed a weight of 13.8g per individual Chinook salmon, which was averaged from weights collected from juvenile Chinook emigrating past the lower Lemhi River rotary screw trap (RST) during the same 91-day period. We divided the total individuals consumption by the average weight of a Chinook emigrant to come up with a presmolt equivalency and then multiplied this by our abundance estimate of northern pikeminnow in Deadwater Slough resulting in an estimate of the total number of Chinook salmon presmolts consumed. Next, we estimated the potential impact to Chinook is the percentage of pikeminnow diet were 20, 50, or 80% juvenile Chinook salmon. Finally, we estimated the number of additional adult Chinook salmon that might be expected to return to the upper Salmon River Subbasin if predation in the Deadwater Slough reach was eliminated; to do so, we multiplied the total estimated consumed juvenile Chinook salmon by an estimate of Granite-to-Granite SARs (McCann et al. 2019).
+
+### Caveats and Assumptions
+
+* Predator and prey energy densities obtained from literature are accurate.
+* Median or average predator weight was estimated accurately.
+* The average size of presmolts estimated from juveniles captured at the lower Lemhi RST is representative of presmolts within the Deadwater Reach.
+* The pikeminnow population size (biomass) within the Deadwater Reach is stable.
+* The length-weight relationship from Parker et al. (1995) for northern pikeminnow is accurate.
+* We do not have good information on the proportion of the northern pikeminnow diet during the "feeding window" that is made up of juvenile Chinook salmon. As a result, we ran scenario where we assumed 20%, 50%, and 80% of the diet consists of juvenile Chinook salmon to evaluate a broad, but perhaps reasonable range.
+* We assumed survival of juvenile Chinook from Deadwater to Lower Granite Dam is 100% which is likely an overestimate, and thus, lead to an overstimate of impacts to adult returns. The current radio telemetry study (e.g., Porter et al. 2019) will provide further information on survival from Deadwater to Granite that we eventually hope to incorporate.
+
+<!-- 
+Other caveats or assumptions I need to add? I'm sure I missed some.
+
+Above, we should probably account for winter mortality from Deadwater -> GRA.
+
+Is it true that Lemhi pre-smolts moving past the lower Lemhi RST might be bigger than fish coming out of other watersheds? If so, that's fine, but that makes all of these estimates even more conservative, meaning that pikeminnow might be eating MORE smolts than we estimate (if many of them are smaller than the 13.8g of a typical Lemhi fish). This is probably worth noting somewhere. 
+
+Yes, that is true. Presmolts outmigrating out of the Lemhi and Pahsimeroi are larger than elsewhere in the Upper Salmon River. With that said, we don't really know yet the proportion of presmolts in the mainstem Salmon that originate from those watershed versus elsewhere. We're hoping the genetics part of the RT study will help answer that. IDFG is currently genotyping those so we should have some info this spring.
+-->
+
+# Results
+
+## Fish Predator Abundance and Size
+
+Angling and electroshocking efforts resulted in capturing seven different species. In total, we captured 656 northern pikeminnow, 31 cutthroat trout *O. clarki*, 10 largescale suckers _Catostomus macrocheilus_, 3 *O. mykiss*, 2 bull trout *Salvelinus confluentus*, 2 bridgelip suckers *Catostomus columbianus*, and 1 mountain whitefish *Prosopium williamsoni*. We had sufficient recaptures to estimate abundances using a Chapman estimator for the two dominant species observed within the reach (Table \@ref(tab:estimates)).
+
+```{r estimates}
+
+# read in the fish capture csv and filter it a little
+bio <- read.csv("FishRecords.csv",
+                na.strings=" ",
+                header=TRUE) %>%
+  filter(Species %in% c('Northern Pikeminnow',
+                        'Cutthroat Trout',
+                        'Bridgelip Sucker',
+                        'Bull Trout',
+                        'Largescale Sucker',
+                        'Mountain Whitefish',
+                        'Steelhead'),
+         Site != '') %>%
+  tbl_df() %>%
+  mutate(Species = fct_drop(Species)) %>%
+  filter(!(FishStatus == 'Dead'& EventType == 'Mark'))
+
+#--------------------------------------------
+# summarise capture histories by species
+#--------------------------------------------
+capHist = bio %>%
+  filter(EventType == 'Mark') %>%
+  group_by(Species, Method) %>%
+  summarise(M = n()) %>%
+  left_join(bio %>%
+              filter(EventType == 'Recapture') %>%
+              group_by(Species, Method) %>%
+              summarise(C = n())) %>%
+  left_join(bio %>%
+              filter(EventType == 'Recapture',
+                     CaptureType == 'Recapture') %>%
+              group_by(Species, Method) %>%
+              summarise(R = n())) %>%
+  ungroup() %>%
+  mutate_at(vars(M:R),
+            list(~ ifelse(is.na(.), 0, .)))
+
+# fit mark-recapture models
+Nmods = capHist %>%
+  # filter out places with no recaptures (no way to make estimate)
+  filter(R > 0) %>%
+  with(.,
+       mrClosed(M,
+                C,
+                R,
+                method = 'Chapman'))
+
+# combine summarised data with model output
+abund_df = capHist %>%
+  # filter out places with no recaptures (no way to make estimate)
+  filter(R > 0) %>%
+  bind_cols(summary(Nmods,
+                    incl.SE = T,
+                    incl.all = F) %>%
+              tbl_df()) %>%
+  bind_cols(confint(Nmods,
+                    incl.all = F) %>%
+              tbl_df()) %>%
+  mutate(probCap = M / N,
+         probCap_SE = M * SE / (N^2)) %>%
+  # add the reaches back in with no recaptures
+  bind_rows(capHist %>%
+              filter(R == 0)) %>%
+  arrange(Species) %>%
+  mutate_at(vars(starts_with("probCap")),
+            list(round),
+            digits = 3)
+
+abund_df %>%
+  rename(p = probCap,
+         p_SE = probCap_SE) %>%
+  kable(booktabs = T,
+        caption = "Estimates and capture numbers for species captured through angling and electrofishing") #%>%
+  # kableExtra::kable_styling()
+```
+
+Figure \@ref(fig:length-histogram) shows length-frequency histograms for the four species we presume to be potential predators of juvenile Chinook salmon. We were able to capture several size classes of predatory fishes and found that our tackle did tend to target fishes large enough to consume a juvenile Chinook salmon. Overall, northern pikeminnow were between 300-550mm and did have the largest size classes among all predators captured. The trout species were generally smaller (Figure \@ref(fig:length-histogram))
+
+```{r length-histogram, fig.align = "center", fig.cap = "Histogram of total lengths found for the four predatory species."}
+lengthplot <- ggplot(subset(bio,
+              Species %in% c('Northern Pikeminnow',
+                             'Cutthroat Trout',
+                             'Bull Trout',
+                             'Steelhead')),
+       aes(x = Length)) +
+  geom_histogram(aes(y = ..density..),
+                 position = 'dodge',
+                 binwidth = 1,
+                 fill = 'blue')+
+  # geom_density(color = 'blue',
+  #              fill = 'blue',
+  #              alpha = 0.2) +
+  theme_bw() +
+  facet_wrap(~ Species,
+             scale = "free_y")+
+  labs(x = "Length (mm)",
+       y = "Proportion of Total Count")
+
+lengthplot
+```
+
+## Stomach Content Analysis
+
+We were able to gastric lavage the majority of fish collected including some non-predatory species. For the northern pikeminnow, we euthanized 66 individuals for dissection to ensure that the gastric lavage was effective in removing stomach contents. We found that overall consistency and weights of stomach contents from the dissected individuals were similar to the samples taken from lavage; hence, we believe the method was sufficient in removing all or most of all stomach contents. In total, we took a total of 692 gut content samples. Of those, 610 (88.2%) were completely empty, 82 (11.8%) had stomach contents, and only 17 (2.5%) contained unknown origin fish parts (Figure \@ref(fig:stomach-contents)). Interestingly, most all of the trout (bull, cutthroat, *O. mykiss*) had contents in there stomach whereas most of the pikeminnow were empty. The non-predatory fish species captured and examined also had no stomach contents. We were able to identify a few juvenile shiners within stomach contents, but most samples were too digested to identify to species. 
+
+<!--
+Braden - Were we able to confirm any juvenile Chinook or steelhead within stomach contents?  No, we were able to identify some shiner fry but most of the fish content was digested down to just a bit of tissue and bones.
+-->
+
+```{r stomach-contents, fig.align = "center", fig.cap = "Histogram of weights for total stomach contents and fish content found within the four predatory species."}
+lavageplot <- bio %>% 
+  filter(Species %in% c("Northern Pikeminnow",
+                         "Cutthroat Trout",
+                         "Bull Trout",
+                         "Steelhead")) %>%
+  gather(type, weight, StomachContentsWeight, FishContentWeight) %>%
+  ggplot(aes(x = weight,
+             fill = type))+
+  geom_histogram(position = "dodge") +
+  facet_wrap(~ Species,
+             scales = "free_y") +
+  labs(x = "Weight (g)",
+       fill = "Type")
+
+lavageplot
+```
+
+## Avian Predation Assessment
+
+The avian survey was successful in finding ten unique sites where either a nest, perched bird, or a PIT tag (presumably from avian predation) were detected in the surrounding area (Figure \@ref(fig:avianmap)). Most sites were located just upstream from Deadwater in the anastomizing reach where the river is heavily braided. We found PIT tags in all areas where bald eagles *Haliaeetus leucocephalus* or nests were observed and a few others at the base of trees where birds could, and mostly likely, were perched (Table \@ref(tab:Avian)).
+
+```{r avianmap, out.width = "800px", fig.align = "center", fig.cap = "Map showing ten unique locations where either a nest, perched bird, or PIT tags presumably from avian predation were detected in area surrounding Deadwater Slough." }
+knitr::include_graphics("images/avian_predation_map.jpg")
+```
+
+
+```{r Avian}
+Avian <- read_csv("AvianResults.csv")
+
+Avian %>%
+  select(-LatitudeDD, -LongitudeDD) %>%
+  rename(Species = MarkSpecies,
+         Birds = BirdsPresent) %>%
+  kable(booktabs = T,
+        caption = "Sites, location, PIT tags, and date and species of when the PIT tag was implanted") %>%
+  kableExtra::column_spec(c(2), width = "1.5cm") %>%
+  kableExtra::column_spec(c(3), width = "1cm") %>%
+  kableExtra::column_spec(c(8:9), width = "2cm")
+  
+```
+
+
+## Potential Impacts to Adult Returns
+
+We estimated that 141 - 1,187 additional adult Chinook salmon might be expected to return to the Upper Salmon River subbasin if predation on juveniles was reduced to zero in the Deadwater Slough reach; of course, results varied by the temperature scenario used and the proportion of northern pikeminnow diet consisting of juvenile Chinook (Table \@ref(tab:adult-impact), Figure \@ref(fig:pikeminnow-impact-fig)). As an example, if we assume that the river temperature holds constant at 4&deg;C (Temperature Scenario 1) and that the pikeminnow diet consists of 20% juvenile Chinook salmon, then we might expect that an additional 141 adults would return; alternatively, if river temperature is set to observed values (Temperature Scenario 2), thus increasing pikeminnow metabolism, and 80% of their diet is juvenile Chinook, then we might expect an additional 1,187 adults return. However, please note the assumptions and caveats we provide in the methods and how those might affect results. One important assumption we made here was that we assumed 100% survival of juvenile Chinook salmon from Deadwater to LGR which could lead to an overestimate of returning adults; however, we did account for LGR to LGR SARs and various proportions of juvenile Chinook salmon in northern pikeminnow diets, which both likely have a larger influence than Deadwater to LGR survival.
+
+```{r adult-impact}
+chnk_smolt = read_csv("Bioenergetics_results.csv") %>%
+  clean_names()
+
+sar = read_csv("WSSCh_sar_4See.csv") %>%
+  summarise_at(vars(medsar, sdsar),
+               list(median)) %>%
+  summarise_at(vars(medsar, sdsar),
+               list(~ . / 100))
+
+# point estimates
+chnk_smolt %>%
+  select(model, scenario, chnk_equiv_consumed = overall_possible_consumption) %>%
+  mutate(chnk_20_consumed = chnk_equiv_consumed * 0.2,
+         chnk_50_consumed = chnk_equiv_consumed * 0.5,
+         chnk_80_consumed = chnk_equiv_consumed * 0.8) %>%
+  add_column(sar = sar$medsar) %>%
+  mutate(chnk_20_adult = chnk_20_consumed * sar,
+         chnk_50_adult = chnk_50_consumed * sar,
+         chnk_80_adult = chnk_80_consumed * sar) %>%
+  mutate(model = as.character(model)) %>%
+  select(-scenario) %>%
+  gather(scenario, est, starts_with("chnk_20"), starts_with("chnk_50"), starts_with("chnk_80")) %>%
+  mutate(Diet = str_extract(scenario, '[:digit:]'),
+         Diet = paste(as.numeric(Diet) * 10, '%'),
+         Diet = if_else(grepl('NA', Diet), as.character(NA), Diet)) %>%
+  mutate(Lifestage = if_else(grepl('consumed$', scenario),
+                             'Smolt',
+                             'Adult')) %>%
+  select(-scenario) %>%
+  spread(Diet, est) %>%
+  arrange(desc(Lifestage), model) %>%
+  rename(`Temperature Scenario` = model,
+         SAR = sar,
+         `Equv. Smolt Consumed` = chnk_equiv_consumed) %>%
+  mutate(`Temperature Scenario` = recode(`Temperature Scenario`, 
+                                         "1" = "1 (Fixed 4 deg C)", 
+                                         "2" = "2 (Empirical)")) %>%
+  kable(digits = c(0, 0, 5, rep(0, 4)),
+        format.args = list(big.mark = ","),
+        booktabs = T,
+        caption = "Impacts of pikeminnow on Chinook smolts and adult equivalents under two temperature models, and three assumptions of percentage of Chinook smolts in pikeminnow diet.")
+  
+```  
+
+```{r adult-impact-v2, eval = F}
+# incorporate some of the uncertainty
+chnk_smolt %>%
+  select(model, total_consumption_g) %>%
+  mutate(avg_smolt_weight = 13.8) %>%
+  mutate(smolt_equiv_consumed = total_consumption_g / avg_smolt_weight) %>%
+  left_join(crossing(model = 1:5,
+                     abund_df %>%
+                       filter(Species == 'Northern Pikeminnow') %>%
+                       select(pikeminnow_N = N, 
+                              pikeminnow_SE = SE))) %>%
+  mutate(smolt_equiv_consumed_tot = pikeminnow_N * smolt_equiv_consumed) %>%
+  left_join(crossing(model = 1:5,
+                     sar)) %>%
+  mutate(chnk_20_adult = smolt_equiv_consumed * 0.2 * pikeminnow_N * medsar,
+         chnk_20_adult_se = smolt_equiv_consumed * 0.2 * pikeminnow_SE * sdsar,
+         chnk_50_adult = smolt_equiv_consumed * 0.5 * pikeminnow_N * medsar,
+         chnk_50_adult_se = smolt_equiv_consumed * 0.5 * pikeminnow_SE * sdsar,
+         chnk_80_adult = smolt_equiv_consumed * 0.8 * pikeminnow_N * medsar,
+         chnk_80_adult_se = smolt_equiv_consumed * 0.8 * pikeminnow_SE * sdsar) %>%
+  kable(format.args = list(big.mark = ","),
+        digits = c(0, 1, 1, 2, 0, 0, 0, 5, 5, rep(0,6)))
+```
+
+
+```{r pikeminnow-impact-fig, fig.cap = "Potential impact of pikeminnow population on Chinook smolts and adults, colored by the assumption of pikeminnow diet made up of Chinook smolts. Thick bars represent one standard error, while thinner lines represent 95% confidence intervals."}
+chnk_impact_df = chnk_smolt %>%
+  select(model, total_consumption_g) %>%
+  mutate(avg_smolt_weight = 13.8) %>%
+  mutate(smolt_equiv_consumed = total_consumption_g / avg_smolt_weight) %>%
+  left_join(crossing(model = 1:5,
+                     abund_df %>%
+                       filter(Species == 'Northern Pikeminnow') %>%
+                       select(pikeminnow_N = N, 
+                              pikeminnow_SE = SE))) %>%
+  mutate(smolt_equiv_consumed_tot = pikeminnow_N * smolt_equiv_consumed) %>%
+  left_join(crossing(model = 1:5,
+                     sar)) %>%
+  mutate(chnk_20_smolt = smolt_equiv_consumed * 0.2 * pikeminnow_N,
+         chnk_20_smolt_se = smolt_equiv_consumed * 0.2 * pikeminnow_SE,
+         chnk_50_smolt = smolt_equiv_consumed * 0.5 * pikeminnow_N,
+         chnk_50_smolt_se = smolt_equiv_consumed * 0.5 * pikeminnow_SE,
+         chnk_80_smolt = smolt_equiv_consumed * 0.8 * pikeminnow_N,
+         chnk_80_smolt_se = smolt_equiv_consumed * 0.8 * pikeminnow_SE) %>%
+  mutate(chnk_20_adult = smolt_equiv_consumed * 0.2 * pikeminnow_N * medsar,
+         chnk_20_adult_se = smolt_equiv_consumed * 0.2 * pikeminnow_SE * sdsar,
+         chnk_50_adult = smolt_equiv_consumed * 0.5 * pikeminnow_N * medsar,
+         chnk_50_adult_se = smolt_equiv_consumed * 0.5 * pikeminnow_SE * sdsar,
+         chnk_80_adult = smolt_equiv_consumed * 0.8 * pikeminnow_N * medsar,
+         chnk_80_adult_se = smolt_equiv_consumed * 0.8 * pikeminnow_SE * sdsar) %>%
+  select(model, starts_with('chnk_'))
+
+dodge_width = 0.5
+chnk_impact_df %>%
+  select(-ends_with('se')) %>%
+  gather(type, est, -model) %>%
+  mutate(Lifestage = if_else(grepl('smolt', type), 'Smolt', 'Adult Equivalent')) %>%
+  mutate(Diet = str_extract(type, '[:digit:]'),
+         Diet = as.numeric(Diet) * 10,
+         Diet = paste(Diet, '%')) %>%
+  select(-type) %>%
+  left_join(chnk_impact_df %>%
+              select(model, ends_with('se')) %>%
+              gather(type, se, -model) %>%
+              mutate(Lifestage = if_else(grepl('smolt', type), 'Smolt', 'Adult Equivalent')) %>%
+              mutate(Diet = str_extract(type, '[:digit:]'),
+                     Diet = as.numeric(Diet) * 10,
+                     Diet = paste(Diet, '%')) %>%
+              select(-type)) %>%
+  select(model, Lifestage, Diet, est, se) %>%
+  mutate_at(vars(Lifestage),
+            list(fct_rev)) %>%
+  mutate(lci = est + qnorm(0.025) * se,
+         uci = est + qnorm(0.975) * se,
+         lqr = est + qnorm(0.25) * se,
+         uqr = est + qnorm(0.75) * se) %>%
+  ggplot(aes(x = as.factor(model),
+             y = est,
+             color = Diet)) +
+  geom_linerange(aes(ymin = lci,
+                    ymax = uci),
+                 position = position_dodge(dodge_width)) +
+  geom_linerange(aes(ymin = lqr,
+                    ymax = uqr),
+                 lwd = 2,
+                 position = position_dodge(dodge_width)) +
+  geom_point(size = 5,
+                 position = position_dodge(dodge_width)) +
+  scale_color_brewer(palette = 'Set1') +
+  facet_wrap(~ Lifestage,
+             scales = 'free') +
+  scale_y_continuous(labels = comma)+
+  labs(x = "Temperature Scenerio Model",
+       y = "Consumed by Pikeminnow at Deadwater")
+
+```
+
+
+# Discussion
+
+This study was established to evaluate the composition and abundance of potential juvenile Chinook salmon predators in the Deadwater Slough area, and further, evaluate their diet composition and potential impacts to adult returns of Chinook salmon in the Upper Salmon Subbasin. We did have sufficent recaptures of cutthroat trout and northern pikeminnow to generate mark-recapture abundance estimates (Table \@ref(tab:estimates)) and estimated greater than 13,000 northern pikeminnow (susceptible to gear) present in the Deadwater Slough reach at the time of sampling (SE = 4,322). Based on two temperature and three diet proportion scenarios, we estimated those northern pikeminnow to consume in the range of 22,000 - 193,000 juvenile Chinook salmon during the fall "feeding window" potentially leading to 141 - 1,187 less adult salmon returning to the Upper Salmon Subbasin (all populations) annually (Table \@ref(tab:adult-impact)). However, please review the assumptions and caveats that we outline within the Methods. Additionally, we identified avian predators in the Deadwater Reach and confirmed predation on Chinook salmon, steelhead, and sockeye in the Deadwater Reach via the presence of PIT tags identified under nesting areas or birds. The Deadwater Reach is a candidate area for habitat rehabilitation to restore susceptible anadromous fishes in the Upper Salmon Subbasin and this study established background information on predation in the Deadwater Reach area.
+
+During the timing of sampling, the reach was heavily dominated by northern pikeminnow with some presence of other predators (e.g., cutthroat trout, bull trout). The high abundance of northern pikeminnow and limited physical features for juvenile fish cover or refuge make it difficult for juveniles to emigrate through the Deadwater Reach without encountering predators. While energy expenditured during this period are low due to cold water, the enzymatic activity for poikilotherms such as northern pikeminnow should still be present and those individuals should still be seeking food.
+
+## Sampling Limitations
+
+The Deadwater Reach is deep and wide, and the use of electroshing was limited in effectiveness to areas one meter deep or less. This made it conducive only to the margin water which makes up a small portion of the reach. Snorkeling the large area also proved problematic in that visibility was reduced and ineffective in deeper areas, also limiting it to the river margins. Underwater visibility in the Deadwater Reach was poor, and the snorkeler's field of vision was limited to less than a meter. Snorkelers did however observe large quantities of juvenile red shiners along the margins along with a few small *O. mykiss* and mountain whitefish. One juvenile Chinook salmon was also observed confirming their presence, but it remains unclear the degree or magnitude in which juvenile Chinook salmon utilize this area during fall and winter for rearing and concealment. Despite the limitations and concerns from electrofishing and snorkeling, angling was successful for capturing predators. Angling was least limited and had the highest chance of successfully capturing a large enough sample size to generate a population estimate for cutthroat trout and northern pikeminnow. We did have concerns that this method was targeting individuals that were actively feeding rather than individuals that had already eaten a meal which could partially explain why the majority of stomachs were empty, but the cutthroat and bull trout did largely have stomach contents which slightly counters this argument.
+
+## Avian Predation
+
+We were able to confirm that avian predation on juvenile salmonids is occuring in the Deadwater Reach; however, it is difficult to estimate the magnitude of that predation (e.g., relative to predation from pikeminnow). The overall magnitude of the avian predation is still unclear considering predator birds may move several miles for a meal if needed, and our empirical observations were limited to observed PIT tags. Additionally, we did observe belted kingfishers *Megaceryle alcyon* flying through the reach which are capable of predating on juvenile salmonids, but they're cavity nesters making it difficult to locate nesting areas. Of interest, all PIT tags observed had no downstream (e.g., hydropower resigts) suggesting that these individuals were most likely consumed as a juvenile.
+
+## Next Steps
+
+Additional studies or research on feeding rates and composition of northern pikeminnow including during warmer periods int his reach might help indicate overall predation on juvenile salmonid emigrants through this reach. Although we've identified that surival decreases through this reach, fish movement and activity for both predators and juveniles suring the early fall, summer, and later spring months are likely increased which could lead to increased feeding rates. Our results were only for an assumed feeding window for Chinook salmon presmolts that occurs in September through November; however, predation on juvenile salmonids during spring and fall is also likely high and thus the overall impacts to juvenile smolts and adult returns is still unknown. Further, anecdotally smallmouth bass are also present in the Deadwater Slough during summer months and would present additional predation. Presumably, water temperatures during our sampling period were either too cold for bass to be active or bass moved downriver in the Salmon or Snake rivers to warmer winter reaches. Additionally, the avian assessment could potentially be improved on by monitoring nesting or roosting areas over a longer period of time, perhaps with cameras, to determine the frequency and rates that juvenile salmonids are being predated upon by birds.
+
+<!--
+Here's what I got so far.  I think the discussion and recommendations sections can definitely be improved.  I played around with that bioenergetics model but need to spend a little more time on it. I'm showing that they some sort of growth measurements with a beginning and end weight which we don't have, but I only spent a few minutes in there and will look into it further
+-->
+
+# Literature Cited
+
+Ackerman, M.W., G.A. Axel, R.A. Carmichael, and K. See. 2018. Movement and Distribution of Sp/Sum Chinook Salmon Pre-smolts in the Mainstem Salmon River, Pilot Study. Prepared by Quantitative Consultants, Inc. and National Oceanic and Atmospheric Administration for the Idaho Office of Species Conservation and U.S. Department of Interior, Bureau of Reclamation.
+
+Axel, G.A., M. Peterson, C.C. Kozfkay, B.P. Sanford, M.G. Nesbit, B.J. Burke, K.E. Frick, and J.J. Lamb. 2015. Characterizing migration and survival between the Upper Salmon River Basin and Lower Granite Dam for juvenile Snake River sockeye salmon, 2014. Report of research by Fish Ecology Division, National Oceanic and Atmospheric Administration and Idaho Department of Fish and Game for Division of Fish and Wildlife, Bonneville Power Administration.
+
+Deslauriers, D., S.R. Chipps, J.E. Breck, J.A. Rice, and C.P. Madenjian. 2017. Fish Bioenergetics 4.0: An R-Based Modeling Application. Fisheries. 42(11):586-596.
+
+Emerson, J.L. 1973. A History of the Salmon National Forest. Report prepared by the Forest Supervisor.
+
+Foster, J.R. 1977. Pulsed Gastric Lavage: An efficient method of removing the stomach contents of live fish. The Progressive Fish Culturist. 39:4.
+
+Moss, J.H., J.M. Murphy, E.A. Fergusson, and R.A. Heintz. 2016. Energy dynamics and growth of juvenile Chinook (*Oncorhynchus tshawytschsa*) and chum (*Oncorhynchus keta*) salmon in the eastern Gulf of Alaska and northern Bering Sea. North Pacific Anadromous Fisheries Commission Bulletin. 6.
+
+Ogle, D.H., P. Wheeler, and A. Dinno. 2019. FSA: Fisheries Stock Analysis. R package version 0.8.26,
+https://github.com/droglenc/FSA.
+
+Parker, R.M., M.P. Zimmerman, and D.L. Ward. 1995. Variability in biological characteristics of northern pikeminnow in the lower Columbia and Snake rivers. Transactions of the American Fisheries Society. 124:335-345.
+
+Porter, N.J., M.W. Ackerman, T. Mackey, G.A. Axel, and K. See. 2019. Movement and Distribution of Chinook Salmon Presmolts in the Mainstem Salmon River. 2018/2019 Annual Report. Prepared by Biomark - Applied Biological Services and National Oceanic and Atmospheric Administration for the Idaho Office of Species Conservation and U.S. Department of Interior, Bureau of Reclamation.
